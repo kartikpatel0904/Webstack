@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.css">
+  
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.js"></script>
+    
+<title>HTML TABLE GENERATOR</title>
+    <style>
+        th, td, p, input {
+            font:14px Verdana;
+        }
+        table, th, td 
+        {
+            border: solid 1px #DDD;
+            border-collapse: collapse;
+            padding: 2px 3px;
+            text-align: center;
+            margin-top: 10px;
+
+        }
+        th {
+            font-weight:bold;
+        }
+    </style>
+</head>
+<body style=" background-color:grey;" >
+    <div class="modal fade" id="CODE" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">CODE</h5>
+        </div>
+        <div class="modal-body">
+          <p style="font-size: 13px;" class="text-danger">NOTE :  YOU HAVE TO INCLUDE FOLLOWING FILES TO YOUR WEBPAGE FOR WORKING TABLE PROPERLY .</p>
+          <form>
+            <div class="form-group">
+                HTML CODE
+              <textarea id="textcode" style="color:cadetblue;" readonly rows=17 class="form-control bg-dark" id="message-text"></textarea>
+                LIBRARIES
+              <textarea style="color:cadetblue;" readonly rows=10  class="form-control bg-dark" id="message-text">
+                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script></textarea>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button id="copytext" type="button" class="btn btn-primary">Copy</button>
+        </div>
+      </div>
+    </div>
+  </div>
+    <nav id="navop" class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand text-light" href="#">TABLE GENERATOR</a>
+       
+        <div class=" text-right text-lg-right text-md-right" id="navbarNavAltMarkup" style="margin-left: auto;">
+          <div class="navbar-nav" style=" margin-left:auto;" >
+    
+            <div class="mr-1 btnc text-right text-lg-right text-md-right"> 
+                <button id="btncode" class="js-seralize btn btn-success btn-lg">GET CODE</button>
+            </div>
+        </div>
+        </div>
+        </nav>  
+    <div class="col-md-12 row text-white" style="margin-top: 10px;;">
+      <div class="col-md-3"></div> 
+      <input id="cols" type="number" min="1" max="100" class="form-control col-md-3" type="text" placeholder="ENTER NUMBER COLUMN"> 
+      <input id="rows" type="number"  min="1" max="100" class="form-control col-md-3" type="text" placeholder="ENTER NUMBER ROWS">
+      <div class="col-md-2"><button class="btn btn-danger" id="genbtn">GENERATE</button></div> 
+      
+    </div>
+    <div id="cont" class="col-12 ">
+    </div>
+</body>
+
+<script>
+  var htmltable="";
+$(document).ready(function(){
+    
+    $("#genbtn").click(function(event){
+            //if($("#cols").val()==0 && $("#cols").val()==0)
+            //{
+               // var $table="";
+                var $thead="<tr>";
+                    for(var j=1;j<=$("#cols").val();j++)
+                    { 
+                        $thead+="<th>DATA</th>"
+                    }
+                    $thead+="</tr>";
+                var $tbody="";
+                for(var i=1;i<=$("#rows").val();i++) {
+                    
+                    $tbody+="<tr>";
+                   
+                   for(var j=1;j<=$("#cols").val();j++)
+                    {   
+                       
+                       
+                       
+                            $tbody+="<td>DATA</td>";
+                        
+                    }
+                
+                    $tbody+="</tr>";
+                }
+                htmltable="<table contentEditable id='table' class='col-md-12 table table-hover' >"+'<thead class="thead-dark">'+$thead+'</thead>'+'<tbody class="bg-white"'+$tbody+'</tbody>'+"</table>";
+                $("#cont").html(htmltable);
+    
+      ///      }
+                
+        });
+
+$("#btncode").click(function(event){
+  document.getElementById("table").contentEditable = false;
+            $("#CODE").modal("show");
+            $("#textcode").html($("#cont").html());
+        });
+$("#copytext").click(function (e) { 
+        e.preventDefault();
+        var  el=  document.querySelector("#textcode");
+        el.select();
+        document.execCommand('copy');
+      });
+});
+
+</script>
+</html>

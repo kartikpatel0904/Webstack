@@ -1,0 +1,4 @@
+dist/*
+demo/*
+spec/*
+src/jq/*.js

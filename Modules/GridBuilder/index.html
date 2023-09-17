@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>GRID BUILDER</title>
+    
+    <link rel="stylesheet" type="text/css" href="./index_files/jquery.gridster.css">
+    <link rel="stylesheet" type="text/css" href="./index_files/demo.css">
+    <link rel="stylesheet" type="text/css" href="./app.css">
+ <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+
+<body style="background-color: black;color: black;" class="btn-primary"> 
+    <nav id="navop" class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand text-light" href="#">GRID BUILDER</a>
+       
+        <div class=" text-right text-lg-right text-md-right" id="navbarNavAltMarkup" style="margin-left: auto;">
+          <div class="navbar-nav" style=" margin-left:auto;" >
+            <div class="mr-1 btnc text-right text-lg-right text-md-right"> 
+                <button class="js-seralize btn btn-danger btn-lg " id="addcomp">ADD</button>
+            </div>
+            <div class="mr-1 btnc text-right text-lg-right text-md-right"> 
+                <button id="btncode" class="js-seralize btn btn-success btn-lg">GET CODE</button>
+            </div>
+            <div class="navbar-nav" style=" margin-left:auto;" >
+                <div class="btnc text-right text-lg-right text-md-right"> 
+                    <button class="js-seralize btn btn-danger btn-lg " id="removecomp">REMOVE ALL</button>
+                </div>
+
+          </div>
+        </div>
+        </div>
+        </nav>  
+        <p class="bg-primary" style="text-align: center;"><j class="navbar-brand text-white" >Grid Layout</j></p>
+        <div style="border: 1px solid white;height:80%;" class="m-1 p-1">
+            <div class="m-1 p-1 gridster ready" >
+                <ul id="works" style="height: 700px; width: 1320px; position: relative;">
+                    <li data-row="1" data-col="7" data-sizex="3" data-sizey="1" class="gs-w">*</li>
+                </ul>
+            </div>
+        </div>
+   
+    <hr>
+    <script src="./index_files/jquery.gridster.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../gridster-bootstrap.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" src="./app/bower_components/underscore/underscore.js"></script>
+
+    <script type="text/javascript">
+    var workmode=0;
+    var gridster;
+
+    $(function() {
+
+        gridster = $(".gridster ul").gridster({
+            widget_base_dimensions: [100, 55],
+            widget_margins: [5, 5],
+            max_cols: 12,
+            min_cols: 12,
+            resize: {
+                    enabled: true
+                }
+        }).data('gridster');
+
+        $("#btncode").click(function (e) { 
+            e.preventDefault();
+            if(workmode===0)
+            {
+                var s = gridster.serialize();
+                debugger;
+                var b = new bsgridster(s, 50, 'graybox');
+                var v = b.getHtml();
+                $("#CODE").modal();
+                $("#textcode").html(v.innerHTML);
+            }
+            else
+            {
+                $("#CODE").modal();
+                $("#textcode").html("");
+            }
+          });
+    });
+   /*  */
+    </script>
+   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content bg-dark">
+        <div class="modal-header">
+          <h5 class="modal-title" style="color:white;" id="exampleModalLabel">COMPONENTS CONFIGURATION</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+         <input required id="nc" class="form-control" placeholder="ENTER NUMBERS OF COMPONENTS" type="text">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" id="gencontrol" class="btn btn-danger">Create</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--NEW FOR SECOND BUTTON-->
+  <div class="modal fade" id="CODE" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">CODE</h5>
+        </div>
+        <div class="modal-body">
+          <p style="font-size: 13px;" class="text-danger">NOTE :  YOU HAVE TO INCLUDE BS4 FILES TO YOUR WEBPAGE FOR WORKING GRID PROPERLY .</p>
+          <form>
+            <div class="form-group">
+              <textarea id="textcode" style="color:cadetblue;" readonly rows=17 class="form-control bg-dark" id="message-text"></textarea>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button id="copytext" type="button" class="btn btn-primary">Copy</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<script>
+   $(document).ready(function(){ 
+      $("#addcomp").click(function (e) { 
+        e.preventDefault();
+        $("#exampleModal").modal();
+      });
+      $("#gencontrol").click(function (e) { 
+        e.preventDefault();
+        for(var i=1;i<=document.getElementById("nc").value;i++)
+        {
+            gridster.add_widget(' <li data-row="1" data-col="7" data-sizex="3" data-sizey="1" class="gs-w">*</li>');
+        }
+        $("#exampleModal").modal("hide");
+        workmode=0;
+        $(".gs-w").dblclick(function(e){
+         gridster.remove_widget(this); 
+      });
+      });
+      $("#copytext").click(function (e) { 
+        e.preventDefault();
+     var  el=  document.querySelector("#textcode");
+     el.select();
+        document.execCommand('copy');
+      });
+      $("#removecomp").click(function (e) { 
+        e.preventDefault();
+        gridster.remove_all_widgets();
+       workmode=1;
+      });
+      $(".gs-w").dblclick(function(e){
+         gridster.remove_widget(this); 
+      });
+   });
+</script>
+</body>
+
+</html>

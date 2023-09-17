@@ -1,0 +1,116 @@
+<!--[{"fname":"Mark", "lname":"Wood", "company":"Apple"},{"fname":"Steve", "lname":"Jones", "company":"Amazon"},{"fname":"Bill", "lname":"Peterson", "company":"HP"},{"fname":"Peter", "lname":"Jacobs", "company":"Dell"}]-->
+<!DOCTYPE html>
+<html>
+<head>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <title>Convert JSON Data to HTML Table</title>
+    <style>
+        th, td, p, input {
+            font:14px Verdana;
+        }
+        table, th, td 
+        {
+            border: solid 1px #DDD;
+            border-collapse: collapse;
+            padding: 2px 3px;
+            text-align: center;
+            margin-top: 10px;
+
+        }
+        th {
+            font-weight:bold;
+        }
+    </style>
+</head>
+<body style=" background-color:grey;" >
+    <div class="modal fade" id="CODE" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">CODE</h5>
+        </div>
+        <div class="modal-body">
+          <p style="font-size: 13px;" class="text-danger">NOTE :  YOU HAVE TO INCLUDE BS4 FILES TO YOUR WEBPAGE FOR WORKING TABLE PROPERLY .</p>
+          <form>
+            <div class="form-group">
+              <textarea id="textcode" style="color:cadetblue;" readonly rows=17 class="form-control bg-dark" id="message-text"></textarea>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button id="copytext" type="button" class="btn btn-primary">Copy</button>
+        </div>
+      </div>
+    </div>
+  </div>
+    <nav id="navop" class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand text-light" href="#">JSON DATA TO HTML TABLE FORMAT</a>
+       
+        <div class=" text-right text-lg-right text-md-right" id="navbarNavAltMarkup" style="margin-left: auto;">
+          <div class="navbar-nav" style=" margin-left:auto;" >
+    
+            <div class="mr-1 btnc text-right text-lg-right text-md-right"> 
+                <button id="btncode" class="js-seralize btn btn-success btn-lg">GET CODE</button>
+            </div>
+        </div>
+        </div>
+        </nav>  
+    <div class="col-md-12 text-white">
+    ENTER JSON DATA
+    <textarea style="width: 100%; resize:  none" rows="10" class="" id="jsondata">
+   
+        
+    </textarea>
+     </div>
+     <div class="col-md-12">
+    <button class="btn" id="gentable">GENERATE TABLE</button>
+    </div>
+    <div class="col-md-12" id="container">   
+    </div>
+</body>
+
+<script>
+$(document).ready(function(){
+var seperator = ',';
+$("#gentable").click(function(event){
+    ConvertToTable($("#jsondata").val());
+});
+function ConvertToTable(jData) {
+  var arrJSON = typeof jData != 'object' ? JSON.parse(jData) : jData;
+  var $table = $('<table class="table table-striped table-dark" />');
+  var $headerTr = $('<tr/>');
+  
+  for (var index in arrJSON[0]) {
+    $headerTr.append($('<th/>').html(index));
+  }
+  $table.append($headerTr);
+  for (var i = 0; i < arrJSON.length; i++) {
+   var $tableTr = $('<tr/>');
+    for (var index in arrJSON[i]) {
+      $tableTr.append($('<td/>').html(arrJSON[i][index]));
+    }
+    $table.append($tableTr);
+  }
+  $('#container').html($table);
+}
+$("#btncode").click(function(event){
+            $("#CODE").modal("show");
+            $("#textcode").html($("#container").html());
+        });
+$("#copytext").click(function (e) { 
+        e.preventDefault();
+        var  el=  document.querySelector("#textcode");
+        el.select();
+        document.execCommand('copy');
+      });
+});
+
+</script>
+</html>
